@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "d3cf1943-5896-4e30-937d-034f395f29a6",
+		"name": "Postman Automation",
+		"description": "Postman Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "B2C->Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"bodyData = JSON.parse(responseBody)\r",
+							"value = bodyData.search_id\r",
+							"console.log(value)\r",
+							"pm.environment.set(\"search_id\", value);\r",
+							"\r",
+							"bodyData = JSON.parse(responseBody)\r",
+							"for (i=0; i<=3; i++)\r",
+							"{\r",
+							"value1 = bodyData.data.AirShoppingRS.OffersGroup.AirlineOffers[0].Offer[i].OfferID\r",
+							"console.log(value1)\r",
+							"pm.environment.set(\"OfferID\", value1)\r",
+							"postman.setNextRequest(\"Price\")\r",
+							"}\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(7569);\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"ShoppingResponseId\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "portal-origin",
+						"value": "https://b2cui2.tltid.com/lk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"flight_req\": {\r\n    \"account_id\": \"\",\r\n    \"org_account_id\": \"\",\r\n    \"trip_type\": \"return\",\r\n    \"currency\": \"LKR\",\r\n    \"alternet_dates\": \"0\",\r\n    \"cabin\": \"Y\",\r\n    \"sectors\": [\r\n      {\r\n        \"departure_date\": \"2021-06-08\",\r\n        \"destination\": \"MEL\",\r\n        \"destination_near_by_airport\": \"N\",\r\n        \"origin\": \"PER\",\r\n        \"origin_near_by_airport\": \"N\"\r\n      },\r\n      {\r\n        \"departure_date\": \"2021-06-12\",\r\n        \"destination\": \"PER\",\r\n        \"destination_near_by_airport\": \"N\",\r\n        \"origin\": \"MEL\",\r\n        \"origin_near_by_airport\": \"N\"\r\n      }\r\n    ],\r\n    \"passengers\": {\r\n      \"adult\": 1,\r\n      \"child\": 0,\r\n      \"lap_infant\": 0,\r\n      \"infant\": 0,\r\n      \"senior_citizen\": 0,\r\n      \"youth\": 0,\r\n      \"junior\": 0\r\n    },\r\n    \"extra_options\": {\r\n      \"direct_flights\": false,\r\n      \"free_baggage\": false,\r\n      \"avoid_us\": false,\r\n      \"near_by_airports\": false,\r\n      \"refundable_fares_only\": false,\r\n      \"allow_upsale_fare\": false\r\n    },\r\n    \"shareUrlId\": \"\",\r\n    \"search_type\": \"lowFareSearch\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://b2b2capi.tltid.com/api/flights/getResult/deal",
+					"protocol": "https",
+					"host": [
+						"b2b2capi",
+						"tltid",
+						"com"
+					],
+					"path": [
+						"api",
+						"flights",
+						"getResult",
+						"deal"
+					]
+				},
+				"description": "B2C->Request"
+			},
+			"response": []
+		},
+		{
+			"name": "Price",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(7569);\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"ShoppingResponseId\");\r",
+							"    console.log(\"Price Confirmed Successfully\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "portal-origin",
+						"value": "https://b2cui2.tltid.com/lk",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"check_price\": {\r\n    \"search_id\": \"{{search_id}}\",\r\n    \"itin_id\": [\r\n      \"{{OfferID}}\"\r\n    ],\r\n    \"search_type\": \"AirShopping\",\r\n    \"parse_res\": \"Y\",\r\n    \"res_key\": \"\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://b2b2capi.tltid.com/api/flights/checkPrice",
+					"protocol": "https",
+					"host": [
+						"b2b2capi",
+						"tltid",
+						"com"
+					],
+					"path": [
+						"api",
+						"flights",
+						"checkPrice"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

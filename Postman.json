@@ -30,7 +30,7 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(7569);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
 							"});\r",
 							"pm.test(\"Successful POST request\", function () {\r",
 							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
